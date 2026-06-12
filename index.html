@@ -556,9 +556,100 @@
       .hero h1 { font-size: 1.6rem; }
       .testimonials-grid { grid-template-columns: 1fr; }
     }
+
+
+    /* ===== LANGUAGE SWITCHER ===== */
+    .lang-switcher {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 999;
+      font-family: var(--font-heading);
+    }
+    .lang-current {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(26, 26, 26, 0.92);
+      color: #fff;
+      border: 1px solid rgba(0, 200, 83, 0.35);
+      border-radius: 999px;
+      padding: 9px 12px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 8px 28px rgba(0,0,0,.35);
+      backdrop-filter: blur(10px);
+    }
+    .lang-current:hover { border-color: var(--accent-green); }
+    .lang-current img, .lang-option img {
+      width: 22px;
+      height: 16px;
+      border-radius: 3px;
+      object-fit: cover;
+      box-shadow: 0 1px 4px rgba(0,0,0,.35);
+    }
+    .lang-menu {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: calc(100% + 10px);
+      width: 245px;
+      max-height: 70vh;
+      overflow-y: auto;
+      background: rgba(26,26,26,.98);
+      border: 1px solid rgba(0, 200, 83, 0.25);
+      border-radius: 16px;
+      padding: 8px;
+      box-shadow: 0 18px 60px rgba(0,0,0,.55);
+    }
+    .lang-switcher.open .lang-menu { display: block; }
+    .lang-option {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: transparent;
+      color: #fff;
+      border: 0;
+      border-radius: 12px;
+      padding: 10px;
+      cursor: pointer;
+      text-align: left;
+      font-size: 14px;
+      font-weight: 650;
+    }
+    .lang-option:hover, .lang-option.active {
+      background: rgba(0, 200, 83, 0.13);
+    }
+    .lang-option .check { margin-left: auto; color: var(--accent-green); font-weight: 900; }
+    [dir="rtl"] .lang-switcher { right: auto; left: 16px; }
+    [dir="rtl"] .lang-menu { right: auto; left: 0; }
+    [dir="rtl"] .lang-option { text-align: right; }
+    [dir="rtl"] .lang-option .check { margin-left: 0; margin-right: auto; }
+    [dir="rtl"] { text-align: right; }
+    [dir="rtl"] .hero, [dir="rtl"] .section-title, [dir="rtl"] .profile-info, [dir="rtl"] footer { text-align: center; }
+    @media (max-width: 480px) {
+      .lang-switcher { top: 10px; right: 10px; }
+      [dir="rtl"] .lang-switcher { right: auto; left: 10px; }
+      .lang-current { padding: 8px 10px; }
+      .lang-menu { width: 230px; }
+    }
+
   </style>
 </head>
 <body>
+
+  <!-- ===== LANGUAGE SWITCHER ===== -->
+  <div class="lang-switcher" id="languageSwitcher">
+    <button class="lang-current" id="languageCurrent" type="button" aria-haspopup="listbox" aria-expanded="false">
+      <img id="languageCurrentFlag" src="https://flagcdn.com/w40/de.png" srcset="https://flagcdn.com/w80/de.png 2x" alt="DE">
+      <span id="languageCurrentCode">DE</span>
+      <span aria-hidden="true">⌄</span>
+    </button>
+    <div class="lang-menu" id="languageMenu" role="listbox"></div>
+  </div>
+
 
   <!-- ===== HERO ===== -->
   <section class="hero">
@@ -662,6 +753,139 @@
       © 2024 ZweiteChance. Alle Rechte vorbehalten.
     </div>
   </footer>
+
+
+  <script>
+    const LANGUAGES = [
+      { code:'de-DE', flag:'de', short:'DE', label:'Deutsch', html:'de', dir:'ltr' },
+      { code:'de-AT', flag:'at', short:'AT', label:'Deutsch AT', html:'de', dir:'ltr' },
+      { code:'de-CH', flag:'ch', short:'CH', label:'Deutsch CH', html:'de', dir:'ltr' },
+      { code:'en-US', flag:'us', short:'EN', label:'English', html:'en', dir:'ltr' },
+      { code:'fr-FR', flag:'fr', short:'FR', label:'Français', html:'fr', dir:'ltr' },
+      { code:'it-IT', flag:'it', short:'IT', label:'Italiano', html:'it', dir:'ltr' },
+      { code:'es-ES', flag:'es', short:'ES', label:'Español', html:'es', dir:'ltr' },
+      { code:'nl-NL', flag:'nl', short:'NL', label:'Nederlands', html:'nl', dir:'ltr' },
+      { code:'pl-PL', flag:'pl', short:'PL', label:'Polski', html:'pl', dir:'ltr' },
+      { code:'cs-CZ', flag:'cz', short:'CZ', label:'Čeština', html:'cs', dir:'ltr' },
+      { code:'sv-SE', flag:'se', short:'SE', label:'Svenska', html:'sv', dir:'ltr' },
+      { code:'nb-NO', flag:'no', short:'NO', label:'Norsk', html:'no', dir:'ltr' },
+      { code:'da-DK', flag:'dk', short:'DK', label:'Dansk', html:'da', dir:'ltr' },
+      { code:'lv-LV', flag:'lv', short:'LV', label:'Latviešu', html:'lv', dir:'ltr' },
+      { code:'lt-LT', flag:'lt', short:'LT', label:'Lietuvių', html:'lt', dir:'ltr' },
+      { code:'he-IL', flag:'il', short:'IL', label:'עברית', html:'he', dir:'rtl' },
+    ];
+
+    const I18N = {
+      'de-DE': { title:'ZweiteChance – Finde deine Liebe', h1:'Finde deine große Liebe in deiner Nähe', cta:'Zweite Chance', profiles:'Beliebte Profile heute', more:'Mehr Profile ansehen →', trust:'🔒 SSL-verschlüsselt • 💯 Diskret • ✅ Keine versteckten Kosten', testimonials:'Das sagen unsere Mitglieder', profileBtn:'Profil ansehen', online:'Online', age:'Jahre', modalTitle:'Profil ansehen', modalText:'Bestätige, dass du über 18 bist, um die Verbindung fortzusetzen.', modalBtn:'Ja, ich bin 18+ →', genericModal:'Warte! Dein Match ist bereit 💫', wants:'möchte dich kennenlernen!', hold:'HALTEN SIE FINGER AUF DRUCK!', footer:'© 2024 ZweiteChance. Alle Rechte vorbehalten.', privacy:'Datenschutz', imprint:'Impressum', terms:'AGB' },
+      'de-AT': { title:'Echte Gefühle – Finde Liebe in deiner Nähe', h1:'Finde echte Gefühle in deiner Nähe', cta:'Jetzt starten', profiles:'Beliebte Profile heute', more:'Mehr Profile ansehen →', trust:'🔒 Sicher • 💯 Diskret • ✅ Keine versteckten Kosten', testimonials:'Das sagen unsere Mitglieder', profileBtn:'Profil ansehen', online:'Online', age:'Jahre', modalTitle:'Profil ansehen', modalText:'Bestätige, dass du über 18 bist, um fortzufahren.', modalBtn:'Ja, ich bin 18+ →', genericModal:'Warte! Dein Match ist bereit 💫', wants:'möchte dich kennenlernen!', hold:'HALTEN SIE FINGER AUF DRUCK!', footer:'© 2024 Echte Gefühle. Alle Rechte vorbehalten.', privacy:'Datenschutz', imprint:'Impressum', terms:'AGB' },
+      'de-CH': { title:'Echte Gefühle – Diskrete Kontakte in deiner Nähe', h1:'Lerne echte Kontakte in deiner Nähe kennen', cta:'Profile ansehen', profiles:'Beliebte Profile heute', more:'Mehr Profile ansehen →', trust:'🔒 Verschlüsselt • 💯 Diskret • ✅ Keine versteckten Kosten', testimonials:'Das sagen unsere Mitglieder', profileBtn:'Profil ansehen', online:'Online', age:'Jahre', modalTitle:'Profil ansehen', modalText:'Bestätige, dass du über 18 bist, um fortzufahren.', modalBtn:'Ja, ich bin 18+ →', genericModal:'Dein Match ist bereit 💫', wants:'möchte dich kennenlernen!', hold:'FINGER GEDRÜCKT HALTEN!', footer:'© 2024 Echte Gefühle. Alle Rechte vorbehalten.', privacy:'Datenschutz', imprint:'Impressum', terms:'AGB' },
+      'en-US': { title:'Real Feelings – Find Love Near You', h1:'Find real love near you', cta:'Start Now', profiles:'Popular profiles today', more:'See more profiles →', trust:'🔒 SSL encrypted • 💯 Discreet • ✅ No hidden costs', testimonials:'What our members say', profileBtn:'View profile', online:'Online', age:'years', modalTitle:'View profile', modalText:'Confirm that you are over 18 to continue.', modalBtn:'Yes, I am 18+ →', genericModal:'Wait! Your match is ready 💫', wants:'wants to meet you!', hold:'TAP AND HOLD!', footer:'© 2024 Real Feelings. All rights reserved.', privacy:'Privacy', imprint:'Imprint', terms:'Terms' },
+      'fr-FR': { title:'Vrais Sentiments – Trouvez l’amour près de vous', h1:'Trouvez une vraie connexion près de vous', cta:'Commencer', profiles:'Profils populaires aujourd’hui', more:'Voir plus de profils →', trust:'🔒 SSL sécurisé • 💯 Discret • ✅ Aucun coût caché', testimonials:'Ce que disent nos membres', profileBtn:'Voir le profil', online:'En ligne', age:'ans', modalTitle:'Voir le profil', modalText:'Confirmez que vous avez plus de 18 ans pour continuer.', modalBtn:'Oui, j’ai 18+ →', genericModal:'Attendez ! Votre match est prêt 💫', wants:'souhaite vous connaître !', hold:'MAINTENEZ APPUYÉ !', footer:'© 2024 Vrais Sentiments. Tous droits réservés.', privacy:'Confidentialité', imprint:'Mentions légales', terms:'Conditions' },
+      'it-IT': { title:'Sentimenti Veri – Trova l’amore vicino a te', h1:'Trova una connessione vera vicino a te', cta:'Inizia ora', profiles:'Profili popolari oggi', more:'Vedi altri profili →', trust:'🔒 SSL sicuro • 💯 Discreto • ✅ Nessun costo nascosto', testimonials:'Cosa dicono i nostri membri', profileBtn:'Vedi profilo', online:'Online', age:'anni', modalTitle:'Vedi profilo', modalText:'Conferma di avere più di 18 anni per continuare.', modalBtn:'Sì, ho 18+ →', genericModal:'Aspetta! Il tuo match è pronto 💫', wants:'vuole conoscerti!', hold:'TIENI PREMUTO!', footer:'© 2024 Sentimenti Veri. Tutti i diritti riservati.', privacy:'Privacy', imprint:'Note legali', terms:'Termini' },
+      'es-ES': { title:'Sentimientos Reales – Encuentra amor cerca de ti', h1:'Encuentra una conexión real cerca de ti', cta:'Empezar ahora', profiles:'Perfiles populares hoy', more:'Ver más perfiles →', trust:'🔒 SSL seguro • 💯 Discreto • ✅ Sin costes ocultos', testimonials:'Lo que dicen nuestros miembros', profileBtn:'Ver perfil', online:'Online', age:'años', modalTitle:'Ver perfil', modalText:'Confirma que tienes más de 18 años para continuar.', modalBtn:'Sí, tengo 18+ →', genericModal:'¡Espera! Tu match está listo 💫', wants:'quiere conocerte!', hold:'MANTÉN PULSADO!', footer:'© 2024 Sentimientos Reales. Todos los derechos reservados.', privacy:'Privacidad', imprint:'Aviso legal', terms:'Términos' },
+      'nl-NL': { title:'Echte Gevoelens – Vind liefde dichtbij', h1:'Vind echte liefde bij jou in de buurt', cta:'Begin nu', profiles:'Populaire profielen vandaag', more:'Meer profielen bekijken →', trust:'🔒 SSL-beveiligd • 💯 Discreet • ✅ Geen verborgen kosten', testimonials:'Wat onze leden zeggen', profileBtn:'Profiel bekijken', online:'Online', age:'jaar', modalTitle:'Profiel bekijken', modalText:'Bevestig dat je ouder bent dan 18 om verder te gaan.', modalBtn:'Ja, ik ben 18+ →', genericModal:'Wacht! Je match is klaar 💫', wants:'wil je leren kennen!', hold:'INGEDRUKT HOUDEN!', footer:'© 2024 Echte Gevoelens. Alle rechten voorbehouden.', privacy:'Privacy', imprint:'Impressum', terms:'Voorwaarden' },
+      'pl-PL': { title:'Prawdziwe Uczucia – Znajdź miłość blisko siebie', h1:'Znajdź prawdziwą miłość w swojej okolicy', cta:'Zacznij teraz', profiles:'Popularne profile dzisiaj', more:'Zobacz więcej profili →', trust:'🔒 Szyfrowanie SSL • 💯 Dyskretnie • ✅ Bez ukrytych kosztów', testimonials:'Co mówią nasi użytkownicy', profileBtn:'Zobacz profil', online:'Online', age:'lat', modalTitle:'Zobacz profil', modalText:'Potwierdź, że masz ponad 18 lat, aby kontynuować.', modalBtn:'Tak, mam 18+ →', genericModal:'Czekaj! Twoje dopasowanie jest gotowe 💫', wants:'chce Cię poznać!', hold:'PRZYTRZYMAJ PALCEM!', footer:'© 2024 Prawdziwe Uczucia. Wszelkie prawa zastrzeżone.', privacy:'Prywatność', imprint:'Impressum', terms:'Regulamin' },
+      'cs-CZ': { title:'Skutečné Pocity – Najděte lásku poblíž', h1:'Najděte skutečnou lásku ve svém okolí', cta:'Začít nyní', profiles:'Oblíbené profily dnes', more:'Zobrazit více profilů →', trust:'🔒 SSL šifrování • 💯 Diskrétně • ✅ Žádné skryté poplatky', testimonials:'Co říkají naši členové', profileBtn:'Zobrazit profil', online:'Online', age:'let', modalTitle:'Zobrazit profil', modalText:'Potvrďte, že je vám více než 18 let.', modalBtn:'Ano, je mi 18+ →', genericModal:'Počkejte! Vaše shoda je připravena 💫', wants:'vás chce poznat!', hold:'PODRŽTE PRST!', footer:'© 2024 Skutečné Pocity. Všechna práva vyhrazena.', privacy:'Soukromí', imprint:'Impressum', terms:'Podmínky' },
+      'sv-SE': { title:'Äkta Känslor – Hitta kärlek nära dig', h1:'Hitta äkta kärlek nära dig', cta:'Börja nu', profiles:'Populära profiler idag', more:'Se fler profiler →', trust:'🔒 SSL-säkert • 💯 Diskret • ✅ Inga dolda kostnader', testimonials:'Vad våra medlemmar säger', profileBtn:'Visa profil', online:'Online', age:'år', modalTitle:'Visa profil', modalText:'Bekräfta att du är över 18 år för att fortsätta.', modalBtn:'Ja, jag är 18+ →', genericModal:'Vänta! Din match är redo 💫', wants:'vill träffa dig!', hold:'TRYCK OCH HÅLL!', footer:'© 2024 Äkta Känslor. Alla rättigheter förbehållna.', privacy:'Integritet', imprint:'Impressum', terms:'Villkor' },
+      'nb-NO': { title:'Ekte Følelser – Finn kjærlighet nær deg', h1:'Finn ekte kjærlighet nær deg', cta:'Start nå', profiles:'Populære profiler i dag', more:'Se flere profiler →', trust:'🔒 SSL-sikret • 💯 Diskret • ✅ Ingen skjulte kostnader', testimonials:'Hva medlemmene våre sier', profileBtn:'Se profil', online:'Online', age:'år', modalTitle:'Se profil', modalText:'Bekreft at du er over 18 år for å fortsette.', modalBtn:'Ja, jeg er 18+ →', genericModal:'Vent! Matchen din er klar 💫', wants:'vil bli kjent med deg!', hold:'TRYKK OG HOLD!', footer:'© 2024 Ekte Følelser. Alle rettigheter forbeholdt.', privacy:'Personvern', imprint:'Impressum', terms:'Vilkår' },
+      'da-DK': { title:'Ægte Følelser – Find kærlighed tæt på dig', h1:'Find ægte kærlighed tæt på dig', cta:'Start nu', profiles:'Populære profiler i dag', more:'Se flere profiler →', trust:'🔒 SSL-sikret • 💯 Diskret • ✅ Ingen skjulte omkostninger', testimonials:'Hvad vores medlemmer siger', profileBtn:'Se profil', online:'Online', age:'år', modalTitle:'Se profil', modalText:'Bekræft, at du er over 18 år for at fortsætte.', modalBtn:'Ja, jeg er 18+ →', genericModal:'Vent! Dit match er klar 💫', wants:'vil lære dig at kende!', hold:'TRYK OG HOLD!', footer:'© 2024 Ægte Følelser. Alle rettigheder forbeholdes.', privacy:'Privatliv', imprint:'Impressum', terms:'Vilkår' },
+      'lv-LV': { title:'Īstas Jūtas – Atrodi mīlestību tuvumā', h1:'Atrodi īstu mīlestību savā tuvumā', cta:'Sākt tagad', profiles:'Populāri profili šodien', more:'Apskatīt vairāk profilu →', trust:'🔒 SSL aizsardzība • 💯 Diskrēti • ✅ Bez slēptām izmaksām', testimonials:'Ko saka mūsu lietotāji', profileBtn:'Apskatīt profilu', online:'Tiešsaistē', age:'gadi', modalTitle:'Apskatīt profilu', modalText:'Apstiprini, ka esi vecāks par 18 gadiem.', modalBtn:'Jā, man ir 18+ →', genericModal:'Pagaidi! Tava saderība ir gatava 💫', wants:'vēlas tevi iepazīt!', hold:'TURI NOSPIESTU!', footer:'© 2024 Īstas Jūtas. Visas tiesības aizsargātas.', privacy:'Privātums', imprint:'Impressum', terms:'Noteikumi' },
+      'lt-LT': { title:'Tikri Jausmai – Rask meilę šalia', h1:'Rask tikrą meilę savo aplinkoje', cta:'Pradėti dabar', profiles:'Populiarūs profiliai šiandien', more:'Žiūrėti daugiau profilių →', trust:'🔒 SSL apsauga • 💯 Diskretiška • ✅ Jokių paslėptų mokesčių', testimonials:'Ką sako mūsų nariai', profileBtn:'Žiūrėti profilį', online:'Prisijungusi', age:'metai', modalTitle:'Žiūrėti profilį', modalText:'Patvirtink, kad tau daugiau nei 18 metų.', modalBtn:'Taip, man 18+ →', genericModal:'Palauk! Tavo atitikmuo pasiruošęs 💫', wants:'nori su tavimi susipažinti!', hold:'LAIKYK PASPAUDĘS!', footer:'© 2024 Tikri Jausmai. Visos teisės saugomos.', privacy:'Privatumas', imprint:'Impressum', terms:'Sąlygos' },
+      'he-IL': { title:'רגשות אמיתיים – מצאו אהבה קרובה', h1:'מצאו אהבה אמיתית קרוב אליכם', cta:'התחילו עכשיו', profiles:'פרופילים פופולריים היום', more:'ראו עוד פרופילים ←', trust:'🔒 SSL מאובטח • 💯 דיסקרטי • ✅ ללא עלויות נסתרות', testimonials:'מה החברים שלנו אומרים', profileBtn:'צפו בפרופיל', online:'מחוברת', age:'שנים', modalTitle:'צפו בפרופיל', modalText:'אשרו שאתם מעל גיל 18 כדי להמשיך.', modalBtn:'כן, אני 18+ ←', genericModal:'רגע! ההתאמה שלך מוכנה 💫', wants:'רוצה להכיר אותך!', hold:'לחצו והחזיקו!', footer:'© 2024 רגשות אמיתיים. כל הזכויות שמורות.', privacy:'פרטיות', imprint:'פרטי האתר', terms:'תנאים' }
+    };
+
+    function normalizeLanguage(language) {
+      const lang = (language || '').toLowerCase();
+      if (lang === 'de-ch' || lang.startsWith('de-ch')) return 'de-CH';
+      if (lang === 'de-at' || lang.startsWith('de-at')) return 'de-AT';
+      if (lang === 'de' || lang.startsWith('de-')) return 'de-DE';
+      if (lang === 'pl' || lang.startsWith('pl-')) return 'pl-PL';
+      if (lang === 'nl' || lang.startsWith('nl-')) return 'nl-NL';
+      if (lang === 'no' || lang.startsWith('no-') || lang === 'nb' || lang.startsWith('nb-') || lang === 'nn' || lang.startsWith('nn-')) return 'nb-NO';
+      if (lang === 'sv' || lang.startsWith('sv-')) return 'sv-SE';
+      if (lang === 'da' || lang.startsWith('da-')) return 'da-DK';
+      if (lang === 'fr' || lang.startsWith('fr-')) return 'fr-FR';
+      if (lang === 'it' || lang.startsWith('it-')) return 'it-IT';
+      if (lang === 'es' || lang.startsWith('es-')) return 'es-ES';
+      if (lang === 'cs' || lang.startsWith('cs-')) return 'cs-CZ';
+      if (lang === 'lv' || lang.startsWith('lv-')) return 'lv-LV';
+      if (lang === 'lt' || lang.startsWith('lt-')) return 'lt-LT';
+      if (lang === 'he' || lang.startsWith('he-') || lang === 'iw' || lang.startsWith('iw-')) return 'he-IL';
+      if (lang === 'en' || lang.startsWith('en-')) return 'en-US';
+      return null;
+    }
+
+    function getCurrentLocale() {
+      const params = new URLSearchParams(window.location.search);
+      const urlLang = params.get('lang');
+      if (urlLang && I18N[urlLang]) return urlLang;
+      const browserLanguages = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language];
+      for (const browserLanguage of browserLanguages) {
+        const matched = normalizeLanguage(browserLanguage);
+        if (matched && I18N[matched]) return matched;
+      }
+      return 'de-DE';
+    }
+
+    let CURRENT_LOCALE = getCurrentLocale();
+    let T = I18N[CURRENT_LOCALE] || I18N['de-DE'];
+
+    function setLocale(code) {
+      const url = new URL(window.location.href);
+      url.searchParams.set('lang', code);
+      window.location.assign(url.toString());
+    }
+
+    function setupLanguageSwitcher() {
+      const switcher = document.getElementById('languageSwitcher');
+      const currentBtn = document.getElementById('languageCurrent');
+      const currentFlag = document.getElementById('languageCurrentFlag');
+      const currentCode = document.getElementById('languageCurrentCode');
+      const menu = document.getElementById('languageMenu');
+      const currentLang = LANGUAGES.find(l => l.code === CURRENT_LOCALE) || LANGUAGES[0];
+      currentFlag.src = `https://flagcdn.com/w40/${currentLang.flag}.png`;
+      currentFlag.srcset = `https://flagcdn.com/w80/${currentLang.flag}.png 2x`;
+      currentCode.textContent = currentLang.short;
+      menu.innerHTML = LANGUAGES.map(lang => `
+        <button class="lang-option ${lang.code === CURRENT_LOCALE ? 'active' : ''}" type="button" role="option" onclick="setLocale('${lang.code}')">
+          <img src="https://flagcdn.com/w40/${lang.flag}.png" srcset="https://flagcdn.com/w80/${lang.flag}.png 2x" alt="${lang.short}">
+          <span>${lang.label}</span>
+          ${lang.code === CURRENT_LOCALE ? '<span class="check">✓</span>' : ''}
+        </button>
+      `).join('');
+      currentBtn.onclick = () => {
+        switcher.classList.toggle('open');
+        currentBtn.setAttribute('aria-expanded', switcher.classList.contains('open') ? 'true' : 'false');
+      };
+      document.addEventListener('click', (event) => {
+        if (!switcher.contains(event.target)) switcher.classList.remove('open');
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') switcher.classList.remove('open');
+      });
+    }
+
+    function applyTranslations() {
+      const langMeta = LANGUAGES.find(l => l.code === CURRENT_LOCALE) || LANGUAGES[0];
+      document.documentElement.lang = langMeta.html;
+      document.documentElement.dir = langMeta.dir;
+      document.title = T.title;
+      const h1 = document.querySelector('.hero h1'); if (h1) h1.textContent = T.h1;
+      const main = document.getElementById('mainCta'); if (main) main.textContent = T.cta;
+      const titles = document.querySelectorAll('.section-title');
+      if (titles[0]) titles[0].textContent = T.profiles;
+      if (titles[1]) titles[1].textContent = T.testimonials;
+      const more = document.getElementById('moreProfilesBtn'); if (more) more.textContent = T.more;
+      const trust = document.querySelector('.trust-section div'); if (trust) trust.textContent = T.trust;
+      const modalP = document.querySelector('.modal-content p'); if (modalP) modalP.textContent = T.modalText;
+      const modalBtn = document.getElementById('modalContinue'); if (modalBtn) modalBtn.textContent = T.modalBtn;
+      const footerLinks = document.querySelectorAll('footer a');
+      if (footerLinks[0]) footerLinks[0].textContent = T.privacy;
+      if (footerLinks[1]) footerLinks[1].textContent = T.imprint;
+      if (footerLinks[2]) footerLinks[2].textContent = T.terms;
+      const footerCopy = document.querySelector('footer div[style*="margin-top"]'); if (footerCopy) footerCopy.textContent = T.footer;
+    }
+  </script>
 
   <!-- ===== SCRIPTS ===== -->
   <script>
@@ -948,16 +1172,16 @@
              <!-- Стрелка вниз -->
              <svg class="tap-arrow-svg" viewBox="0 0 24 24"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
              
-             <a href="${link}" class="profile-btn">Profil ansehen</a>
+             <a href="${link}" class="profile-btn">${T.profileBtn}</a>
              
              <!-- Текст -->
-             <span class="tap-instruction">Halte Finger auf Druck!</span>
+             <span class="tap-instruction">${T.hold}</span>
           </div>
          `;
       } else {
          // Для Android/Web: Кнопка вызывает модалку (не ссылка напрямую)
          actionHTML = `
-          <button class="profile-btn" onclick="openModal('${profile.name}, ${profile.age}', 'images/${profile.img}')">Profil ansehen</button>
+          <button class="profile-btn" onclick="openModal('${profile.name}, ${profile.age}', 'images/${profile.img}')">${T.profileBtn}</button>
          `;
       }
 
@@ -968,7 +1192,7 @@
         </div>
         <div class="profile-info">
           <div class="profile-name">${profile.name}</div>
-          <div class="profile-meta">${profile.age} Jahre • ${profile.city}</div>
+          <div class="profile-meta">${profile.age} ${T.age} • ${profile.city}</div>
           
           ${actionHTML}
         </div>
@@ -1003,6 +1227,8 @@
 
     // ===== INITIALISIERUNG =====
     document.addEventListener('DOMContentLoaded', () => {
+      applyTranslations();
+      setupLanguageSwitcher();
       renderRandomProfiles();
       prepareAffiliateLink();
       
@@ -1041,7 +1267,7 @@
          // TEXT BELOW BUTTON
          const textLabel = document.createElement("div");
          textLabel.className = "tap-instruction";
-         textLabel.textContent = "HALTEN SIE FINGER AUF DRUCK!";
+         textLabel.textContent = T.hold;
          textLabel.style.marginTop = "10px";
          textLabel.style.textAlign = "center";
          textLabel.style.width = "100%"; 
@@ -1069,7 +1295,7 @@
          const bottomArrowIcon = `<svg class="hero-tap-arrow-svg" viewBox="0 0 24 24"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>`;
          const bottomTextLabel = document.createElement("div");
          bottomTextLabel.className = "tap-instruction";
-         bottomTextLabel.textContent = "HALTEN SIE FINGER AUF DRUCK!";
+         bottomTextLabel.textContent = T.hold;
          bottomTextLabel.style.marginTop = "10px";
          bottomTextLabel.style.textAlign = "center";
          bottomTextLabel.style.width = "100%";
@@ -1119,9 +1345,9 @@
     function openModal(profileName = null, profileImg = null) {
       if (profileName) {
         const name = profileName.split(',')[0];
-        modalTitle.textContent = `${name} möchte dich kennenlernen!`;
+        modalTitle.textContent = `${name} ${T.wants}`;
       } else {
-        modalTitle.textContent = 'Warte! Dein Match ist bereit 💫';
+        modalTitle.textContent = T.genericModal;
       }
       
       if (profileImg) {
