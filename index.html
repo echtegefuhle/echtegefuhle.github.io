@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZweiteChance – Finde deine Liebe</title>
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "vxurqpe6ww");
+</script>
+  
+  <!-- ===== PRELOAD FIRST IMAGES ===== -->
+  <link rel="preload" as="image" href="images/girl1.jpg">
+  <link rel="preload" as="image" href="images/girl2.jpg">
+  <link rel="preload" as="image" href="images/girl3.jpg">
+  
+  <!-- ===== GOOGLE FONTS ===== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ===== DARK COLOR PALETTE ===== */
+    :root {
+      --bg-dark: #0a0a0a;
+      --bg-card: #1a1a1a;
+      --bg-card-hover: #252525;
+      --bg-info: #2a2a2a;
+      --bg-info-dark: #202020;
+      --accent-green: #00c853;
+      --accent-green-dark: #00a844;
+      --accent-glow: rgba(0, 200, 83, 0.3);
+      --text-main: #ffffff;
+      --text-muted: #b0b0b0;
+      --success: #00c853;
+      --shadow-green: 0 10px 50px rgba(0, 200, 83, 0.25);
+      --radius: 20px;
+      --font-heading: 'Inter', sans-serif;
+      --alert-red: #ff3333;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: var(--font-body);
+      background: linear-gradient(180deg, #0a0a0a 0%, #121212 50%, #0a0a0a 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      padding-bottom: 60px;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 60px 20px 25px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: 2.8rem;
+      font-weight: 800;
+      margin-bottom: 25px;
+      background: linear-gradient(135deg, #ffffff 0%, #d4d4d4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -1px;
+      line-height: 1.2;
+      max-width: 90%; 
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .hero-btn {
+      display: inline-block;
+      padding: 16px 48px;
+      background: linear-gradient(135deg, var(--accent-green), var(--accent-green-dark));
+      color: white;
+      font-weight: 700;
+      font-size: 1.05rem;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 8px 30px var(--accent-glow);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .hero-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0, 200, 83, 0.6);
+    }
+    
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    
+    .section-title {
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin: 30px 0 35px;
+      color: var(--text-main);
+    }
+    
+    .profiles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 35px;
+      padding: 20px;
+    }
+    
+    .profile-card {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      border: 1px solid rgba(0, 200, 83, 0.15);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+    
+    .profile-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle at 50% 0%, var(--accent-glow), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+      z-index: 0;
+    }
+    
+    .profile-card:hover::before { opacity: 1; }
+    
+    .profile-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-green);
+      border-color: var(--success);
+    }
+    
+    .profile-img-container {
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+      background: linear-gradient(135deg, #1a1a1a, #252525);
+    }
+    
+    .profile-img {
+      width: 100%;
+      height: 520px;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      opacity: 0;
+      transform: scale(1.02);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      will-change: opacity, transform;
+    }
+    
+    .profile-img.loaded { opacity: 1; transform: scale(1); }
+    
+    .profile-img::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(135deg, #1a1a1a, #252525, #1a1a1a);
+      background-size: 200% 200%;
+      animation: shimmer 1.5s ease-in-out infinite;
+    }
+    
+    .profile-img.loaded::before { display: none; }
+    
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    
+    .online-badge {
+      position: absolute;
+      top: 12px; right: 12px;
+      background: linear-gradient(135deg, var(--success), #00a844);
+      color: white;
+      font-size: 0.75rem;
+      padding: 6px 12px;
+      border-radius: 15px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 2;
+      box-shadow: 0 2px 10px rgba(0, 200, 83, 0.4);
+    }
+    
+    .online-badge::before {
+      content: '';
+      width: 7px; height: 7px;
+      background: white;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    
+    .profile-info {
+      padding: 25px 20px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      background: linear-gradient(135deg, var(--bg-info), var(--bg-info-dark));
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .profile-name {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+    
+    .profile-meta {
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 0.95rem;
+      margin-bottom: 18px;
+      font-weight: 500;
+    }
+
+    /* === СТИЛИ ДЛЯ КНОПКИ И ИНСТРУКЦИИ === */
+    .tap-actions-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px; /* Чуть больше расстояние */
+    }
+    
+    .tap-arrow-svg {
+      width: 28px; /* БОЛЬШЕ чем было */
+      height: 28px;
+      stroke: var(--alert-red); /* Яркий красный */
+      stroke-width: 5; /* ТОЛЩЕ линия */
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      filter: drop-shadow(0 2px 2px rgba(255, 51, 51, 0.4));
+    }
+    
+    .profile-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 35px;
+      background: linear-gradient(135deg, var(--accent-green), var(--accent-green-dark));
+      color: white;
+      font-weight: 700;
+      font-size: 0.95rem;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      min-width: 180px;
+    }
+    
+    .profile-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 200, 83, 0.5);
+    }
+
+    .tap-instruction {
+      color: var(--alert-red) !important; /* Яркий красный текст */
+      font-size: 1.1rem; /* БОЛЬШЕ шрифт */
+      font-weight: 900; /* ЖИРНЫЙ текст */
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 5px; /* Чуть ближе к кнопке */
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    /* === Стили для верхней кнопки === */
+    .hero-action-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-tap-arrow-svg {
+      width: 32px; /* Очень большая стрелка сверху */
+      height: 32px;
+      stroke: var(--alert-red);
+      stroke-width: 5;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      filter: drop-shadow(0 2px 2px rgba(255, 51, 51, 0.4));
+      margin-bottom: 10px; /* Расстояние от стрелки до кнопки */
+    }
+
+    .more-profiles { text-align: center; margin: 45px 0 25px; display: flex; flex-direction: column; align-items: center;}
+    
+    .more-btn {
+      display: inline-block;
+      padding: 16px 50px;
+      background: transparent;
+      color: var(--accent-green);
+      font-weight: 700;
+      font-size: 1.05rem;
+      border: 2px solid var(--accent-green);
+      border-radius: 50px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .more-btn:hover {
+      background: linear-gradient(135deg, var(--accent-green), var(--accent-green-dark));
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px var(--accent-glow);
+    }
+    
+    .trust-section {
+      text-align: center;
+      padding: 15px 20px 0;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-top: 10px;
+      margin-bottom: 0;
+    }
+    
+    .testimonials-section {
+      padding: 10px 20px 60px;
+      background: linear-gradient(180deg, transparent, rgba(0, 200, 83, 0.05), transparent);
+    }
+    
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 30px;
+    }
+    
+    .testimonial-card {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      padding: 30px;
+      border: 1px solid rgba(0, 200, 83, 0.15);
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .testimonial-card:hover {
+      border-color: var(--success);
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-green);
+    }
+    
+    .testimonial-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+    
+    .testimonial-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: top;
+      border: 3px solid var(--success);
+      flex-shrink: 0;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    
+    .testimonial-avatar.loaded { opacity: 1; }
+    
+    .testimonial-user { flex: 1; }
+    
+    .testimonial-name {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text-main);
+    }
+    
+    .testimonial-meta { color: var(--text-muted); font-size: 0.85rem; }
+    
+    .stars { color: #ffc107; font-size: 1rem; letter-spacing: 2px; margin-bottom: 15px; }
+    
+    .testimonial-text {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      font-style: italic;
+    }
+    
+    .testimonial-date {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      margin-top: 15px;
+      opacity: 0.7;
+    }
+    
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    
+    .modal.active {
+      display: flex;
+      animation: fadeIn 0.3s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    .modal-content {
+      background: linear-gradient(135deg, var(--bg-card), #1a1a1a);
+      border-radius: var(--radius);
+      padding: 40px 35px;
+      max-width: 450px;
+      width: 100%;
+      text-align: center;
+      border: 2px solid var(--success);
+      box-shadow: 0 10px 50px var(--accent-glow);
+      animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    @keyframes slideUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    
+    .modal-img {
+      width: 110px; height: 110px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: top;
+      margin: 0 auto 25px;
+      border: 4px solid var(--success);
+      box-shadow: 0 5px 25px var(--accent-glow);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    
+    .modal-img.loaded { opacity: 1; }
+    
+    .modal h3 {
+      font-family: var(--font-heading);
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: var(--text-main);
+    }
+    
+    .modal p {
+      color: var(--text-muted);
+      margin-bottom: 30px;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+    
+    .modal-btn {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, var(--accent-green), var(--accent-green-dark));
+      color: white;
+      font-weight: 700;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 20px var(--accent-glow);
+    }
+    
+    .modal-btn:hover {
+      box-shadow: 0 8px 30px rgba(0, 200, 83, 0.6);
+      transform: translateY(-2px);
+    }
+    
+    footer {
+      text-align: center;
+      padding: 40px 20px 50px;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      line-height: 1.6;
+      border-top: 1px solid rgba(0, 200, 83, 0.1);
+      margin-top: 40px;
+    }
+    
+    footer a {
+      color: var(--success);
+      text-decoration: none;
+      margin: 0 6px;
+    }
+    
+    footer a:hover { text-decoration: underline; }
+    
+    .disclaimer {
+      margin-top: 15px;
+      opacity: 0.6;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    @media (max-width: 1024px) {
+      .profiles-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .profiles-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        padding: 10px;
+      }
+      .profile-img { height: 480px; }
+      .hero h1 { font-size: 2rem; }
+      .hero-btn { padding: 14px 38px; font-size: 1rem; }
+      
+      /* Адаптация для мобильных */
+      .tap-instruction { font-size: 1rem; } /* Уменьшаем немного но оставляем крупным */
+      .tap-arrow-svg { width: 20px; height: 20px; }
+      .hero-tap-arrow-svg { width: 20px; height: 20px; }
+    }
+    
+    @media (max-width: 480px) {
+      .profile-img { height: 450px; }
+      .hero h1 { font-size: 1.6rem; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+    }
+
+
+    /* ===== LANGUAGE SWITCHER ===== */
+    .lang-switcher {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 999;
+      font-family: var(--font-heading);
+    }
+    .lang-current {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(26, 26, 26, 0.92);
+      color: #fff;
+      border: 1px solid rgba(0, 200, 83, 0.35);
+      border-radius: 999px;
+      padding: 9px 12px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 8px 28px rgba(0,0,0,.35);
+      backdrop-filter: blur(10px);
+    }
+    .lang-current:hover { border-color: var(--accent-green); }
+    .lang-current img, .lang-option img {
+      width: 22px;
+      height: 16px;
+      border-radius: 3px;
+      object-fit: cover;
+      box-shadow: 0 1px 4px rgba(0,0,0,.35);
+    }
+    .lang-menu {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: calc(100% + 10px);
+      width: 245px;
+      max-height: 70vh;
+      overflow-y: auto;
+      background: rgba(26,26,26,.98);
+      border: 1px solid rgba(0, 200, 83, 0.25);
+      border-radius: 16px;
+      padding: 8px;
+      box-shadow: 0 18px 60px rgba(0,0,0,.55);
+    }
+    .lang-switcher.open .lang-menu { display: block; }
+    .lang-option {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: transparent;
+      color: #fff;
+      border: 0;
+      border-radius: 12px;
+      padding: 10px;
+      cursor: pointer;
+      text-align: left;
+      font-size: 14px;
+      font-weight: 650;
+    }
+    .lang-option:hover, .lang-option.active {
+      background: rgba(0, 200, 83, 0.13);
+    }
+    .lang-option .check { margin-left: auto; color: var(--accent-green); font-weight: 900; }
+    [dir="rtl"] .lang-switcher { right: auto; left: 16px; }
+    [dir="rtl"] .lang-menu { right: auto; left: 0; }
+    [dir="rtl"] .lang-option { text-align: right; }
+    [dir="rtl"] .lang-option .check { margin-left: 0; margin-right: auto; }
+    [dir="rtl"] { text-align: right; }
+    [dir="rtl"] .hero, [dir="rtl"] .section-title, [dir="rtl"] .profile-info, [dir="rtl"] footer { text-align: center; }
+    @media (max-width: 480px) {
+      .lang-switcher { top: 10px; right: 10px; }
+      [dir="rtl"] .lang-switcher { right: auto; left: 10px; }
+      .lang-current { padding: 8px 10px; }
+      .lang-menu { width: 230px; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ===== LANGUAGE SWITCHER ===== -->
+  <div class="lang-switcher" id="languageSwitcher">
+    <button class="lang-current" id="languageCurrent" type="button" aria-haspopup="listbox" aria-expanded="false">
+      <img id="languageCurrentFlag" src="https://flagcdn.com/w40/de.png" srcset="https://flagcdn.com/w80/de.png 2x" alt="DE">
+      <span id="languageCurrentCode">DE</span>
+      <span aria-hidden="true">⌄</span>
+    </button>
+    <div class="lang-menu" id="languageMenu" role="listbox"></div>
+  </div>
+
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <h1>Finde deine große Liebe in deiner Nähe</h1>
+    <!-- Верхняя кнопка без данных onclick, логика будет в скрипте -->
+    <div id="mainHeroSection" style="position:relative; display:flex; flex-direction:column; align-items:center;">
+      <a href="#" class="hero-btn" id="mainCta">Zweite Chance</a>
+    </div>
+  </section>
+
+  <!-- ===== PROFILES ===== -->
+  <div class="container" id="profiles">
+    <h2 class="section-title">Beliebte Profile heute</h2>
+    
+    <div class="profiles-grid" id="profilesGrid">
+      <!-- Profile werden per JavaScript hinzugefügt -->
+    </div>
+
+    <!-- ===== MORE PROFILES BUTTON ===== -->
+    <div class="more-profiles" id="moreProfilesWrapper">
+      <a href="#" class="more-btn" id="moreProfilesBtn">Mehr Profile ansehen →</a>
+    </div>
+
+    <!-- ===== TRUST BADGE ===== -->
+    <div class="trust-section">
+      <div>🔒 SSL-verschlüsselt • 💯 Diskret • ✅ Keine versteckten Kosten</div>
+    </div>
+  </div>
+
+  <!-- ===== TESTIMONIALS ===== -->
+  <section class="testimonials-section">
+    <div class="container">
+      <h2 class="section-title">Das sagen unsere Mitglieder</h2>
+      
+      <div class="testimonials-grid">
+        
+        <!-- TESTIMONIAL 1 -->
+        <div class="testimonial-card">
+          <div class="testimonial-header">
+            <img src="images/man1.jpg" alt="Stefan" class="testimonial-avatar">
+            <div class="testimonial-user">
+              <div class="testimonial-name">Stefan, 52</div>
+              <div class="testimonial-meta">aus Frankfurt</div>
+            </div>
+          </div>
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"Ich war skeptisch, aber nach 2 Wochen habe ich hier eine wunderbare Frau kennengelernt. Die Plattform ist seriös und einfach zu bedienen. Bin sehr glücklich!"</p>
+          <div class="testimonial-date">vor 3 Wochen</div>
+        </div>
+        
+        <!-- TESTIMONIAL 2 -->
+        <div class="testimonial-card">
+          <div class="testimonial-header">
+            <img src="images/man2.jpg" alt="Markus" class="testimonial-avatar">
+            <div class="testimonial-user">
+              <div class="testimonial-name">Markus, 48</div>
+              <div class="testimonial-meta">aus Berlin</div>
+            </div>
+          </div>
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"Endlich eine Dating-Seite, die hält was sie verspricht! Habe meine Partnerin nach einem Monat gefunden. Der Support ist auch top. Absolute Empfehlung!"</p>
+          <div class="testimonial-date">vor 1 Monat</div>
+        </div>
+        
+        <!-- TESTIMONIAL 3 -->
+        <div class="testimonial-card">
+          <div class="testimonial-header">
+            <img src="images/man3.jpg" alt="Andreas" class="testimonial-avatar">
+            <div class="testimonial-user">
+              <div class="testimonial-name">Andreas, 55</div>
+              <div class="testimonial-meta">aus München</div>
+            </div>
+          </div>
+          <div class="stars">★★★★☆</div>
+          <p class="testimonial-text">"Gute Auswahl an Profilen in meiner Altersgruppe. Die Kommunikation verlief von Anfang an respektvoll. Nach 6 Wochen Dates habe ich meine Traumfrau gefunden."</p>
+          <div class="testimonial-date">vor 2 Wochen</div>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MODAL ===== -->
+  <div class="modal" id="confirmModal">
+    <div class="modal-content">
+      <img src="" alt="Profile" class="modal-img" id="modalImg">
+      <h3 id="modalTitle">Profil ansehen</h3>
+      <p>Bestätige, dass du über 18 bist, um die Verbindung fortzusetzen.</p>
+      <button class="modal-btn" id="modalContinue">Ja, ich bin 18+ →</button>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div>
+      <a href="/privacy.html">Datenschutz</a> • 
+      <a href="/terms.html">Impressum</a> • 
+      <a href="/disclaimer.html">AGB</a>
+    </div>
+    <div style="margin-top:10px; opacity:0.5">
+      © 2024 ZweiteChance. Alle Rechte vorbehalten.
+    </div>
+  </footer>
+
+
+  <script>
+    const LANGUAGES = [
+      { code:'de-DE', flag:'de', short:'DE', label:'Deutsch', html:'de', dir:'ltr' },
+      { code:'de-AT', flag:'at', short:'AT', label:'Deutsch AT', html:'de', dir:'ltr' },
+      { code:'de-CH', flag:'ch', short:'CH', label:'Deutsch CH', html:'de', dir:'ltr' },
+      { code:'en-US', flag:'us', short:'EN', label:'English', html:'en', dir:'ltr' },
+      { code:'fr-FR', flag:'fr', short:'FR', label:'Français', html:'fr', dir:'ltr' },
+      { code:'it-IT', flag:'it', short:'IT', label:'Italiano', html:'it', dir:'ltr' },
+      { code:'es-ES', flag:'es', short:'ES', label:'Español', html:'es', dir:'ltr' },
+      { code:'nl-NL', flag:'nl', short:'NL', label:'Nederlands', html:'nl', dir:'ltr' },
+      { code:'pl-PL', flag:'pl', short:'PL', label:'Polski', html:'pl', dir:'ltr' },
+      { code:'cs-CZ', flag:'cz', short:'CZ', label:'Čeština', html:'cs', dir:'ltr' },
+      { code:'sv-SE', flag:'se', short:'SE', label:'Svenska', html:'sv', dir:'ltr' },
+      { code:'nb-NO', flag:'no', short:'NO', label:'Norsk', html:'no', dir:'ltr' },
+      { code:'da-DK', flag:'dk', short:'DK', label:'Dansk', html:'da', dir:'ltr' },
+      { code:'lv-LV', flag:'lv', short:'LV', label:'Latviešu', html:'lv', dir:'ltr' },
+      { code:'lt-LT', flag:'lt', short:'LT', label:'Lietuvių', html:'lt', dir:'ltr' },
+      { code:'he-IL', flag:'il', short:'IL', label:'עברית', html:'he', dir:'rtl' },
+    ];
+
+    const I18N = {
+      'de-DE': { title:'ZweiteChance – Finde deine Liebe', h1:'Finde deine große Liebe in deiner Nähe', cta:'Zweite Chance', profiles:'Beliebte Profile heute', more:'Mehr Profile ansehen →', trust:'🔒 SSL-verschlüsselt • 💯 Diskret • ✅ Keine versteckten Kosten', testimonials:'Das sagen unsere Mitglieder', profileBtn:'Profil ansehen', online:'Online', age:'Jahre', modalTitle:'Profil ansehen', modalText:'Bestätige, dass du über 18 bist, um die Verbindung fortzusetzen.', modalBtn:'Ja, ich bin 18+ →', genericModal:'Warte! Dein Match ist bereit 💫', wants:'möchte dich kennenlernen!', hold:'HALTEN SIE FINGER AUF DRUCK!', footer:'© 2024 ZweiteChance. Alle Rechte vorbehalten.', privacy:'Datenschutz', imprint:'Impressum', terms:'AGB' },
+      'de-AT': { title:'Echte Gefühle – Finde Liebe in deiner Nähe', h1:'Finde echte Gefühle in deiner Nähe', cta:'Jetzt starten', profiles:'Beliebte Profile heute', more:'Mehr Profile ansehen →', trust:'🔒 Sicher • 💯 Diskret • ✅ Keine versteckten Kosten', testimonials:'Das sagen unsere Mitglieder', profileBtn:'Profil ansehen', online:'Online', age:'Jahre', modalTitle:'Profil ansehen', modalText:'Bestätige, dass du über 18 bist, um fortzufahren.', modalBtn:'Ja, ich bin 18+ →', genericModal:'Warte! Dein Match ist bereit 💫', wants:'möchte dich kennenlernen!', hold:'HALTEN SIE FINGER AUF DRUCK!', footer:'© 2024 Echte Gefühle. Alle Rechte vorbehalten.', privacy:'Datenschutz', imprint:'Impressum', terms:'AGB' },
+      'de-CH': { title:'Echte Gefühle – Diskrete Kontakte in deiner Nähe', h1:'Lerne echte Kontakte in deiner Nähe kennen', cta:'Profile ansehen', profiles:'Beliebte Profile heute', more:'Mehr Profile ansehen →', trust:'🔒 Verschlüsselt • 💯 Diskret • ✅ Keine versteckten Kosten', testimonials:'Das sagen unsere Mitglieder', profileBtn:'Profil ansehen', online:'Online', age:'Jahre', modalTitle:'Profil ansehen', modalText:'Bestätige, dass du über 18 bist, um fortzufahren.', modalBtn:'Ja, ich bin 18+ →', genericModal:'Dein Match ist bereit 💫', wants:'möchte dich kennenlernen!', hold:'FINGER GEDRÜCKT HALTEN!', footer:'© 2024 Echte Gefühle. Alle Rechte vorbehalten.', privacy:'Datenschutz', imprint:'Impressum', terms:'AGB' },
+      'en-US': { title:'Real Feelings – Find Love Near You', h1:'Find real love near you', cta:'Start Now', profiles:'Popular profiles today', more:'See more profiles →', trust:'🔒 SSL encrypted • 💯 Discreet • ✅ No hidden costs', testimonials:'What our members say', profileBtn:'View profile', online:'Online', age:'years', modalTitle:'View profile', modalText:'Confirm that you are over 18 to continue.', modalBtn:'Yes, I am 18+ →', genericModal:'Wait! Your match is ready 💫', wants:'wants to meet you!', hold:'TAP AND HOLD!', footer:'© 2024 Real Feelings. All rights reserved.', privacy:'Privacy', imprint:'Imprint', terms:'Terms' },
+      'fr-FR': { title:'Vrais Sentiments – Trouvez l’amour près de vous', h1:'Trouvez une vraie connexion près de vous', cta:'Commencer', profiles:'Profils populaires aujourd’hui', more:'Voir plus de profils →', trust:'🔒 SSL sécurisé • 💯 Discret • ✅ Aucun coût caché', testimonials:'Ce que disent nos membres', profileBtn:'Voir le profil', online:'En ligne', age:'ans', modalTitle:'Voir le profil', modalText:'Confirmez que vous avez plus de 18 ans pour continuer.', modalBtn:'Oui, j’ai 18+ →', genericModal:'Attendez ! Votre match est prêt 💫', wants:'souhaite vous connaître !', hold:'MAINTENEZ APPUYÉ !', footer:'© 2024 Vrais Sentiments. Tous droits réservés.', privacy:'Confidentialité', imprint:'Mentions légales', terms:'Conditions' },
+      'it-IT': { title:'Sentimenti Veri – Trova l’amore vicino a te', h1:'Trova una connessione vera vicino a te', cta:'Inizia ora', profiles:'Profili popolari oggi', more:'Vedi altri profili →', trust:'🔒 SSL sicuro • 💯 Discreto • ✅ Nessun costo nascosto', testimonials:'Cosa dicono i nostri membri', profileBtn:'Vedi profilo', online:'Online', age:'anni', modalTitle:'Vedi profilo', modalText:'Conferma di avere più di 18 anni per continuare.', modalBtn:'Sì, ho 18+ →', genericModal:'Aspetta! Il tuo match è pronto 💫', wants:'vuole conoscerti!', hold:'TIENI PREMUTO!', footer:'© 2024 Sentimenti Veri. Tutti i diritti riservati.', privacy:'Privacy', imprint:'Note legali', terms:'Termini' },
+      'es-ES': { title:'Sentimientos Reales – Encuentra amor cerca de ti', h1:'Encuentra una conexión real cerca de ti', cta:'Empezar ahora', profiles:'Perfiles populares hoy', more:'Ver más perfiles →', trust:'🔒 SSL seguro • 💯 Discreto • ✅ Sin costes ocultos', testimonials:'Lo que dicen nuestros miembros', profileBtn:'Ver perfil', online:'Online', age:'años', modalTitle:'Ver perfil', modalText:'Confirma que tienes más de 18 años para continuar.', modalBtn:'Sí, tengo 18+ →', genericModal:'¡Espera! Tu match está listo 💫', wants:'quiere conocerte!', hold:'MANTÉN PULSADO!', footer:'© 2024 Sentimientos Reales. Todos los derechos reservados.', privacy:'Privacidad', imprint:'Aviso legal', terms:'Términos' },
+      'nl-NL': { title:'Echte Gevoelens – Vind liefde dichtbij', h1:'Vind echte liefde bij jou in de buurt', cta:'Begin nu', profiles:'Populaire profielen vandaag', more:'Meer profielen bekijken →', trust:'🔒 SSL-beveiligd • 💯 Discreet • ✅ Geen verborgen kosten', testimonials:'Wat onze leden zeggen', profileBtn:'Profiel bekijken', online:'Online', age:'jaar', modalTitle:'Profiel bekijken', modalText:'Bevestig dat je ouder bent dan 18 om verder te gaan.', modalBtn:'Ja, ik ben 18+ →', genericModal:'Wacht! Je match is klaar 💫', wants:'wil je leren kennen!', hold:'INGEDRUKT HOUDEN!', footer:'© 2024 Echte Gevoelens. Alle rechten voorbehouden.', privacy:'Privacy', imprint:'Impressum', terms:'Voorwaarden' },
+      'pl-PL': { title:'Prawdziwe Uczucia – Znajdź miłość blisko siebie', h1:'Znajdź prawdziwą miłość w swojej okolicy', cta:'Zacznij teraz', profiles:'Popularne profile dzisiaj', more:'Zobacz więcej profili →', trust:'🔒 Szyfrowanie SSL • 💯 Dyskretnie • ✅ Bez ukrytych kosztów', testimonials:'Co mówią nasi użytkownicy', profileBtn:'Zobacz profil', online:'Online', age:'lat', modalTitle:'Zobacz profil', modalText:'Potwierdź, że masz ponad 18 lat, aby kontynuować.', modalBtn:'Tak, mam 18+ →', genericModal:'Czekaj! Twoje dopasowanie jest gotowe 💫', wants:'chce Cię poznać!', hold:'PRZYTRZYMAJ PALCEM!', footer:'© 2024 Prawdziwe Uczucia. Wszelkie prawa zastrzeżone.', privacy:'Prywatność', imprint:'Impressum', terms:'Regulamin' },
+      'cs-CZ': { title:'Skutečné Pocity – Najděte lásku poblíž', h1:'Najděte skutečnou lásku ve svém okolí', cta:'Začít nyní', profiles:'Oblíbené profily dnes', more:'Zobrazit více profilů →', trust:'🔒 SSL šifrování • 💯 Diskrétně • ✅ Žádné skryté poplatky', testimonials:'Co říkají naši členové', profileBtn:'Zobrazit profil', online:'Online', age:'let', modalTitle:'Zobrazit profil', modalText:'Potvrďte, že je vám více než 18 let.', modalBtn:'Ano, je mi 18+ →', genericModal:'Počkejte! Vaše shoda je připravena 💫', wants:'vás chce poznat!', hold:'PODRŽTE PRST!', footer:'© 2024 Skutečné Pocity. Všechna práva vyhrazena.', privacy:'Soukromí', imprint:'Impressum', terms:'Podmínky' },
+      'sv-SE': { title:'Äkta Känslor – Hitta kärlek nära dig', h1:'Hitta äkta kärlek nära dig', cta:'Börja nu', profiles:'Populära profiler idag', more:'Se fler profiler →', trust:'🔒 SSL-säkert • 💯 Diskret • ✅ Inga dolda kostnader', testimonials:'Vad våra medlemmar säger', profileBtn:'Visa profil', online:'Online', age:'år', modalTitle:'Visa profil', modalText:'Bekräfta att du är över 18 år för att fortsätta.', modalBtn:'Ja, jag är 18+ →', genericModal:'Vänta! Din match är redo 💫', wants:'vill träffa dig!', hold:'TRYCK OCH HÅLL!', footer:'© 2024 Äkta Känslor. Alla rättigheter förbehållna.', privacy:'Integritet', imprint:'Impressum', terms:'Villkor' },
+      'nb-NO': { title:'Ekte Følelser – Finn kjærlighet nær deg', h1:'Finn ekte kjærlighet nær deg', cta:'Start nå', profiles:'Populære profiler i dag', more:'Se flere profiler →', trust:'🔒 SSL-sikret • 💯 Diskret • ✅ Ingen skjulte kostnader', testimonials:'Hva medlemmene våre sier', profileBtn:'Se profil', online:'Online', age:'år', modalTitle:'Se profil', modalText:'Bekreft at du er over 18 år for å fortsette.', modalBtn:'Ja, jeg er 18+ →', genericModal:'Vent! Matchen din er klar 💫', wants:'vil bli kjent med deg!', hold:'TRYKK OG HOLD!', footer:'© 2024 Ekte Følelser. Alle rettigheter forbeholdt.', privacy:'Personvern', imprint:'Impressum', terms:'Vilkår' },
+      'da-DK': { title:'Ægte Følelser – Find kærlighed tæt på dig', h1:'Find ægte kærlighed tæt på dig', cta:'Start nu', profiles:'Populære profiler i dag', more:'Se flere profiler →', trust:'🔒 SSL-sikret • 💯 Diskret • ✅ Ingen skjulte omkostninger', testimonials:'Hvad vores medlemmer siger', profileBtn:'Se profil', online:'Online', age:'år', modalTitle:'Se profil', modalText:'Bekræft, at du er over 18 år for at fortsætte.', modalBtn:'Ja, jeg er 18+ →', genericModal:'Vent! Dit match er klar 💫', wants:'vil lære dig at kende!', hold:'TRYK OG HOLD!', footer:'© 2024 Ægte Følelser. Alle rettigheder forbeholdes.', privacy:'Privatliv', imprint:'Impressum', terms:'Vilkår' },
+      'lv-LV': { title:'Īstas Jūtas – Atrodi mīlestību tuvumā', h1:'Atrodi īstu mīlestību savā tuvumā', cta:'Sākt tagad', profiles:'Populāri profili šodien', more:'Apskatīt vairāk profilu →', trust:'🔒 SSL aizsardzība • 💯 Diskrēti • ✅ Bez slēptām izmaksām', testimonials:'Ko saka mūsu lietotāji', profileBtn:'Apskatīt profilu', online:'Tiešsaistē', age:'gadi', modalTitle:'Apskatīt profilu', modalText:'Apstiprini, ka esi vecāks par 18 gadiem.', modalBtn:'Jā, man ir 18+ →', genericModal:'Pagaidi! Tava saderība ir gatava 💫', wants:'vēlas tevi iepazīt!', hold:'TURI NOSPIESTU!', footer:'© 2024 Īstas Jūtas. Visas tiesības aizsargātas.', privacy:'Privātums', imprint:'Impressum', terms:'Noteikumi' },
+      'lt-LT': { title:'Tikri Jausmai – Rask meilę šalia', h1:'Rask tikrą meilę savo aplinkoje', cta:'Pradėti dabar', profiles:'Populiarūs profiliai šiandien', more:'Žiūrėti daugiau profilių →', trust:'🔒 SSL apsauga • 💯 Diskretiška • ✅ Jokių paslėptų mokesčių', testimonials:'Ką sako mūsų nariai', profileBtn:'Žiūrėti profilį', online:'Prisijungusi', age:'metai', modalTitle:'Žiūrėti profilį', modalText:'Patvirtink, kad tau daugiau nei 18 metų.', modalBtn:'Taip, man 18+ →', genericModal:'Palauk! Tavo atitikmuo pasiruošęs 💫', wants:'nori su tavimi susipažinti!', hold:'LAIKYK PASPAUDĘS!', footer:'© 2024 Tikri Jausmai. Visos teisės saugomos.', privacy:'Privatumas', imprint:'Impressum', terms:'Sąlygos' },
+      'he-IL': { title:'רגשות אמיתיים – מצאו אהבה קרובה', h1:'מצאו אהבה אמיתית קרוב אליכם', cta:'התחילו עכשיו', profiles:'פרופילים פופולריים היום', more:'ראו עוד פרופילים ←', trust:'🔒 SSL מאובטח • 💯 דיסקרטי • ✅ ללא עלויות נסתרות', testimonials:'מה החברים שלנו אומרים', profileBtn:'צפו בפרופיל', online:'מחוברת', age:'שנים', modalTitle:'צפו בפרופיל', modalText:'אשרו שאתם מעל גיל 18 כדי להמשיך.', modalBtn:'כן, אני 18+ ←', genericModal:'רגע! ההתאמה שלך מוכנה 💫', wants:'רוצה להכיר אותך!', hold:'לחצו והחזיקו!', footer:'© 2024 רגשות אמיתיים. כל הזכויות שמורות.', privacy:'פרטיות', imprint:'פרטי האתר', terms:'תנאים' }
+    };
+
+    function normalizeLanguage(language) {
+      const lang = (language || '').toLowerCase();
+      if (lang === 'de-ch' || lang.startsWith('de-ch')) return 'de-CH';
+      if (lang === 'de-at' || lang.startsWith('de-at')) return 'de-AT';
+      if (lang === 'de' || lang.startsWith('de-')) return 'de-DE';
+      if (lang === 'pl' || lang.startsWith('pl-')) return 'pl-PL';
+      if (lang === 'nl' || lang.startsWith('nl-')) return 'nl-NL';
+      if (lang === 'no' || lang.startsWith('no-') || lang === 'nb' || lang.startsWith('nb-') || lang === 'nn' || lang.startsWith('nn-')) return 'nb-NO';
+      if (lang === 'sv' || lang.startsWith('sv-')) return 'sv-SE';
+      if (lang === 'da' || lang.startsWith('da-')) return 'da-DK';
+      if (lang === 'fr' || lang.startsWith('fr-')) return 'fr-FR';
+      if (lang === 'it' || lang.startsWith('it-')) return 'it-IT';
+      if (lang === 'es' || lang.startsWith('es-')) return 'es-ES';
+      if (lang === 'cs' || lang.startsWith('cs-')) return 'cs-CZ';
+      if (lang === 'lv' || lang.startsWith('lv-')) return 'lv-LV';
+      if (lang === 'lt' || lang.startsWith('lt-')) return 'lt-LT';
+      if (lang === 'he' || lang.startsWith('he-') || lang === 'iw' || lang.startsWith('iw-')) return 'he-IL';
+      if (lang === 'en' || lang.startsWith('en-')) return 'en-US';
+      return null;
+    }
+
+    function getCurrentLocale() {
+      const params = new URLSearchParams(window.location.search);
+      const urlLang = params.get('lang');
+      if (urlLang && I18N[urlLang]) return urlLang;
+      const browserLanguages = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language];
+      for (const browserLanguage of browserLanguages) {
+        const matched = normalizeLanguage(browserLanguage);
+        if (matched && I18N[matched]) return matched;
+      }
+      return 'de-DE';
+    }
+
+    let CURRENT_LOCALE = getCurrentLocale();
+    let T = I18N[CURRENT_LOCALE] || I18N['de-DE'];
+
+    function setLocale(code) {
+      const url = new URL(window.location.href);
+      url.searchParams.set('lang', code);
+      window.location.assign(url.toString());
+    }
+
+    function setupLanguageSwitcher() {
+      const switcher = document.getElementById('languageSwitcher');
+      const currentBtn = document.getElementById('languageCurrent');
+      const currentFlag = document.getElementById('languageCurrentFlag');
+      const currentCode = document.getElementById('languageCurrentCode');
+      const menu = document.getElementById('languageMenu');
+      const currentLang = LANGUAGES.find(l => l.code === CURRENT_LOCALE) || LANGUAGES[0];
+      currentFlag.src = `https://flagcdn.com/w40/${currentLang.flag}.png`;
+      currentFlag.srcset = `https://flagcdn.com/w80/${currentLang.flag}.png 2x`;
+      currentCode.textContent = currentLang.short;
+      menu.innerHTML = LANGUAGES.map(lang => `
+        <button class="lang-option ${lang.code === CURRENT_LOCALE ? 'active' : ''}" type="button" role="option" onclick="setLocale('${lang.code}')">
+          <img src="https://flagcdn.com/w40/${lang.flag}.png" srcset="https://flagcdn.com/w80/${lang.flag}.png 2x" alt="${lang.short}">
+          <span>${lang.label}</span>
+          ${lang.code === CURRENT_LOCALE ? '<span class="check">✓</span>' : ''}
+        </button>
+      `).join('');
+      currentBtn.onclick = () => {
+        switcher.classList.toggle('open');
+        currentBtn.setAttribute('aria-expanded', switcher.classList.contains('open') ? 'true' : 'false');
+      };
+      document.addEventListener('click', (event) => {
+        if (!switcher.contains(event.target)) switcher.classList.remove('open');
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') switcher.classList.remove('open');
+      });
+    }
+
+    function applyTranslations() {
+      const langMeta = LANGUAGES.find(l => l.code === CURRENT_LOCALE) || LANGUAGES[0];
+      document.documentElement.lang = langMeta.html;
+      document.documentElement.dir = langMeta.dir;
+      document.title = T.title;
+      const h1 = document.querySelector('.hero h1'); if (h1) h1.textContent = T.h1;
+      const main = document.getElementById('mainCta'); if (main) main.textContent = T.cta;
+      const titles = document.querySelectorAll('.section-title');
+      if (titles[0]) titles[0].textContent = T.profiles;
+      if (titles[1]) titles[1].textContent = T.testimonials;
+      const more = document.getElementById('moreProfilesBtn'); if (more) more.textContent = T.more;
+      const trust = document.querySelector('.trust-section div'); if (trust) trust.textContent = T.trust;
+      const modalP = document.querySelector('.modal-content p'); if (modalP) modalP.textContent = T.modalText;
+      const modalBtn = document.getElementById('modalContinue'); if (modalBtn) modalBtn.textContent = T.modalBtn;
+      const footerLinks = document.querySelectorAll('footer a');
+      if (footerLinks[0]) footerLinks[0].textContent = T.privacy;
+      if (footerLinks[1]) footerLinks[1].textContent = T.imprint;
+      if (footerLinks[2]) footerLinks[2].textContent = T.terms;
+      const footerCopy = document.querySelector('footer div[style*="margin-top"]'); if (footerCopy) footerCopy.textContent = T.footer;
+    }
+  </script>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script>
+    // ⚠️ HIER DEINEN AFFILIATE-LINK EINFÜGEN! (OHNE LEERZEICHEN!)
+    const AFFILIATE_LINK = 'https://go.cm-trk6.com/aff_f?h=Bjgjxo';
+    
+    const modal = document.getElementById('confirmModal');
+    const modalImg = document.getElementById('modalImg');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalContinue = document.getElementById('modalContinue');
+    const mainCta = document.getElementById('mainCta');
+    const moreProfilesBtn = document.getElementById('moreProfilesBtn');
+    const mainHeroSection = document.getElementById('mainHeroSection');
+    const moreProfilesWrapper = document.getElementById('moreProfilesWrapper');
+    
+    // ===== PROFILE DATABASE (222 FOTOS) - DEUTSCHE STÄDTE =====
+    const allProfiles = [
+      { name: 'Ingeborg', age: 52, city: 'Passau', img: 'girl1.jpg' },
+      { name: 'Hildegard', age: 54, city: 'Bamberg', img: 'girl2.jpg' },
+      { name: 'Brunhilde', age: 51, city: 'Görlitz', img: 'girl3.jpg' },
+      { name: 'Waltraud', age: 49, city: 'Weimar', img: 'girl4.jpg' },
+      { name: 'Gertrud', age: 53, city: 'Rothenburg', img: 'girl5.jpg' },
+      { name: 'Mechthild', age: 47, city: 'Quedlinburg', img: 'girl6.jpg' },
+      { name: 'Adelheid', age: 50, city: 'Celle', img: 'girl7.jpg' },
+      { name: 'Irmgard', age: 55, city: 'Goslar', img: 'girl8.jpg' },
+      { name: 'Hedwig', age: 48, city: 'Wernigerode', img: 'girl9.jpg' },
+      { name: 'Elfriede', age: 46, city: 'Stolberg', img: 'girl10.jpg' },
+      { name: 'Gerlinde', age: 52, city: 'Schwäbisch Hall', img: 'girl11.jpg' },
+      { name: 'Sieglinde', age: 54, city: 'Dinkelsbühl', img: 'girl12.jpg' },
+      { name: 'Brunhild', age: 50, city: 'Nördlingen', img: 'girl13.jpg' },
+      { name: 'Dietlinde', age: 47, city: 'Meersburg', img: 'girl14.jpg' },
+      { name: 'Sigrun', age: 49, city: 'Lindau', img: 'girl15.jpg' },
+      { name: 'Ingelore', age: 53, city: 'Konstanz', img: 'girl16.jpg' },
+      { name: 'Renate', age: 51, city: 'Freiburg', img: 'girl17.jpg' },
+      { name: 'Gisela', age: 48, city: 'Heidelberg', img: 'girl18.jpg' },
+      { name: 'Helga', age: 55, city: 'Speyer', img: 'girl19.jpg' },
+      { name: 'Ursula', age: 46, city: 'Worms', img: 'girl20.jpg' },
+      { name: 'Christa', age: 52, city: 'Mainz', img: 'girl21.jpg' },
+      { name: 'Brigitte', age: 54, city: 'Trier', img: 'girl22.jpg' },
+      { name: 'Monika', age: 50, city: 'Koblenz', img: 'girl23.jpg' },
+      { name: 'Petra', age: 47, city: 'Rüdesheim', img: 'girl24.jpg' },
+      { name: 'Sabine', age: 49, city: 'Baden-Baden', img: 'girl25.jpg' },
+      { name: 'Karin', age: 53, city: 'Freudenstadt', img: 'girl26.jpg' },
+      { name: 'Susanne', age: 51, city: 'Tübingen', img: 'girl27.jpg' },
+      { name: 'Andrea', age: 48, city: 'Reutlingen', img: 'girl28.jpg' },
+      { name: 'Martina', age: 52, city: 'Ulm', img: 'girl29.jpg' },
+      { name: 'Gabriele', age: 50, city: 'Augsburg', img: 'girl30.jpg' },
+      { name: 'Ute', age: 43, city: 'Regensburg', img: 'girl31.jpg' },
+      { name: 'Renate', age: 54, city: 'Ingolstadt', img: 'girl32.jpg' },
+      { name: 'Helga', age: 51, city: 'Landshut', img: 'girl33.jpg' },
+      { name: 'Ingrid', age: 45, city: 'Straubing', img: 'girl34.jpg' },
+      { name: 'Gisela', age: 53, city: 'Deggendorf', img: 'girl35.jpg' },
+      { name: 'Christa', age: 49, city: 'Cham', img: 'girl36.jpg' },
+      { name: 'Waltraud', age: 46, city: 'Weiden', img: 'girl37.jpg' },
+      { name: 'Elfriede', age: 50, city: 'Bayreuth', img: 'girl38.jpg' },
+      { name: 'Hildegard', age: 52, city: 'Hof', img: 'girl39.jpg' },
+      { name: 'Brigitte', age: 47, city: 'Coburg', img: 'girl40.jpg' },
+      { name: 'Ursula', age: 54, city: 'Schweinfurt', img: 'girl41.jpg' },
+      { name: 'Gerda', age: 48, city: 'Würzburg', img: 'girl42.jpg' },
+      { name: 'Erika', age: 51, city: 'Aschaffenburg', img: 'girl43.jpg' },
+      { name: 'Margot', age: 49, city: 'Fulda', img: 'girl44.jpg' },
+      { name: 'Ruth', age: 53, city: 'Gießen', img: 'girl45.jpg' },
+      { name: 'Edith', age: 46, city: 'Marburg', img: 'girl46.jpg' },
+      { name: 'Herta', age: 50, city: 'Kassel', img: 'girl47.jpg' },
+      { name: 'Lieselotte', age: 52, city: 'Göttingen', img: 'girl48.jpg' },
+      { name: 'Anneliese', age: 47, city: 'Hildesheim', img: 'girl49.jpg' },
+      { name: 'Frieda', age: 54, city: 'Salzgitter', img: 'girl50.jpg' },
+      { name: 'Gerda', age: 49, city: 'Wolfsburg', img: 'girl51.jpg' },
+      { name: 'Hannelore', age: 51, city: 'Braunschweig', img: 'girl52.jpg' },
+      { name: 'Ilse', age: 48, city: 'Hannover', img: 'girl53.jpg' },
+      { name: 'Jutta', age: 53, city: 'Lüneburg', img: 'girl54.jpg' },
+      { name: 'Karla', age: 46, city: 'Stade', img: 'girl55.jpg' },
+      { name: 'Lore', age: 50, city: 'Cuxhaven', img: 'girl56.jpg' },
+      { name: 'Margarete', age: 52, city: 'Bremerhaven', img: 'girl57.jpg' },
+      { name: 'Olga', age: 47, city: 'Oldenburg', img: 'girl58.jpg' },
+      { name: 'Paula', age: 54, city: 'Osnabrück', img: 'girl59.jpg' },
+      { name: 'Rita', age: 49, city: 'Münster', img: 'girl60.jpg' },
+      { name: 'Sonja', age: 51, city: 'Paderborn', img: 'girl61.jpg' },
+      { name: 'Traute', age: 48, city: 'Bielefeld', img: 'girl62.jpg' },
+      { name: 'Ulla', age: 53, city: 'Detmold', img: 'girl63.jpg' },
+      { name: 'Vera', age: 46, city: 'Minden', img: 'girl64.jpg' },
+      { name: 'Wilma', age: 50, city: 'Herford', img: 'girl65.jpg' },
+      { name: 'Xenia', age: 52, city: 'Gütersloh', img: 'girl66.jpg' },
+      { name: 'Yvonne', age: 47, city: 'Soest', img: 'girl67.jpg' },
+      { name: 'Zelda', age: 54, city: 'Arnsberg', img: 'girl68.jpg' },
+      { name: 'Alma', age: 49, city: 'Siegen', img: 'girl69.jpg' },
+      { name: 'Berta', age: 51, city: 'Bonn', img: 'girl70.jpg' },
+      { name: 'Clara', age: 48, city: 'Aachen', img: 'girl71.jpg' },
+      { name: 'Dora', age: 53, city: 'Düren', img: 'girl72.jpg' },
+      { name: 'Emma', age: 46, city: 'Euskirchen', img: 'girl73.jpg' },
+      { name: 'Flora', age: 50, city: 'Heinsberg', img: 'girl74.jpg' },
+      { name: 'Grete', age: 52, city: 'Mönchengladbach', img: 'girl75.jpg' },
+      { name: 'Hanna', age: 47, city: 'Krefeld', img: 'girl76.jpg' },
+      { name: 'Ida', age: 54, city: 'Viersen', img: 'girl77.jpg' },
+      { name: 'Johanna', age: 49, city: 'Kleve', img: 'girl78.jpg' },
+      { name: 'Klara', age: 51, city: 'Wesel', img: 'girl79.jpg' },
+      { name: 'Lina', age: 48, city: 'Recklinghausen', img: 'girl80.jpg' },
+      { name: 'Maria', age: 53, city: 'Gelsenkirchen', img: 'girl81.jpg' },
+      { name: 'Nora', age: 46, city: 'Essen', img: 'girl82.jpg' },
+      { name: 'Olga', age: 50, city: 'Duisburg', img: 'girl83.jpg' },
+      { name: 'Paula', age: 52, city: 'Mülheim', img: 'girl84.jpg' },
+      { name: 'Rosa', age: 47, city: 'Oberhausen', img: 'girl85.jpg' },
+      { name: 'Sofia', age: 54, city: 'Bottrop', img: 'girl86.jpg' },
+      { name: 'Thea', age: 49, city: 'Gladbeck', img: 'girl87.jpg' },
+      { name: 'Anna', age: 42, city: 'Kiel', img: 'girl88.jpg' },
+      { name: 'Beate', age: 48, city: 'Neubrandenburg', img: 'girl89.jpg' },
+      { name: 'Claudia', age: 51, city: 'Magdeburg', img: 'girl90.jpg' },
+      { name: 'Daniela', age: 45, city: 'Potsdam', img: 'girl91.jpg' },
+      { name: 'Elke', age: 53, city: 'Dessau', img: 'girl92.jpg' },
+      { name: 'Franziska', age: 49, city: 'Brandenburg', img: 'girl93.jpg' },
+      { name: 'Grit', age: 46, city: 'Leipzig', img: 'girl94.jpg' },
+      { name: 'Heike', age: 50, city: 'Dresden', img: 'girl95.jpg' },
+      { name: 'Inka', age: 55, city: 'Bautzen', img: 'girl96.jpg' },
+      { name: 'Jasmin', age: 44, city: 'Chemnitz', img: 'girl97.jpg' },
+      { name: 'Katrin', age: 47, city: 'Zwickau', img: 'girl98.jpg' },
+      { name: 'Laura', age: 52, city: 'Plauen', img: 'girl99.jpg' },
+      { name: 'Melanie', age: 50, city: 'Görlitz', img: 'girl100.jpg' },
+      { name: 'Nicole', age: 43, city: 'Halle', img: 'girl101.jpg' },
+      { name: 'Olivia', age: 48, city: 'Saalfeld', img: 'girl102.jpg' },
+      { name: 'Petra', age: 51, city: 'Erfurt', img: 'girl103.jpg' },
+      { name: 'Quentin', age: 46, city: 'Jena', img: 'girl104.jpg' },
+      { name: 'Rachel', age: 54, city: 'Weimar', img: 'girl105.jpg' },
+      { name: 'Sarah', age: 47, city: 'Gotha', img: 'girl106.jpg' },
+      { name: 'Teresa', age: 52, city: 'Arnstadt', img: 'girl107.jpg' },
+      { name: 'Ulrike', age: 49, city: 'Eisenach', img: 'girl108.jpg' },
+      { name: 'Vanessa', age: 45, city: 'Suhl', img: 'girl109.jpg' },
+      { name: 'Wanda', age: 53, city: 'Meiningen', img: 'girl110.jpg' },
+      { name: 'Xenia', age: 48, city: 'Coburg', img: 'girl111.jpg' },
+      { name: 'Yvonne', age: 50, city: 'Hof', img: 'girl112.jpg' },
+      { name: 'Zoe', age: 44, city: 'Lichtenfels', img: 'girl113.jpg' },
+      { name: 'Agnes', age: 55, city: 'Schweinfurt', img: 'girl114.jpg' },
+      { name: 'Bianca', age: 46, city: 'Bad Kissingen', img: 'girl115.jpg' },
+      { name: 'Celine', age: 51, city: 'Schweinfurt', img: 'girl116.jpg' },
+      { name: 'Doris', age: 47, city: 'Rhöngrab', img: 'girl117.jpg' },
+      { name: 'Elisabeth', age: 54, city: 'Bad Neustadt', img: 'girl118.jpg' },
+      { name: 'Friederike', age: 42, city: 'Marktredwitz', img: 'girl119.jpg' },
+      { name: 'Gaby', age: 49, city: 'Weiden', img: 'girl120.jpg' },
+      { name: 'Hannah', age: 52, city: 'Amberg', img: 'girl121.jpg' },
+      { name: 'Isabel', age: 45, city: 'Neustadt', img: 'girl122.jpg' },
+      { name: 'Jenny', age: 50, city: 'Regensburg', img: 'girl123.jpg' },
+      { name: 'Kirsten', age: 48, city: 'Straubing', img: 'girl124.jpg' },
+      { name: 'Leni', age: 53, city: 'Deggendorf', img: 'girl125.jpg' },
+      { name: 'Miriam', age: 46, city: 'Passau', img: 'girl126.jpg' },
+      { name: 'Nadine', age: 51, city: 'Burghausen', img: 'girl127.jpg' },
+      { name: 'Ophelia', age: 44, city: 'Altötting', img: 'girl128.jpg' },
+      { name: 'Paula', age: 47, city: 'Mühldorf', img: 'girl129.jpg' },
+      { name: 'Quira', age: 52, city: 'Rosenheim', img: 'girl130.jpg' },
+      { name: 'Ricarda', age: 49, city: 'Traunstein', img: 'girl131.jpg' },
+      { name: 'Saskia', age: 54, city: 'Bad Reichenhall', img: 'girl132.jpg' },
+      { name: 'Tanja', age: 43, city: 'Berchtesgaden', img: 'girl133.jpg' },
+      { name: 'Ute', age: 50, city: 'Chiemgau', img: 'girl134.jpg' },
+      { name: 'Vicky', age: 46, city: 'Salzburg', img: 'girl135.jpg' },
+      { name: 'Wanja', age: 55, city: 'Garmisch', img: 'girl136.jpg' },
+      { name: 'Xena', age: 48, city: 'Oberstdorf', img: 'girl137.jpg' },
+      { name: 'Yara', age: 51, city: 'Immenstadt', img: 'girl138.jpg' },
+      { name: 'Zara', age: 45, city: 'Füssen', img: 'girl139.jpg' },
+      { name: 'Antonia', age: 53, city: 'Memmingen', img: 'girl140.jpg' },
+      { name: 'Barbara', age: 47, city: 'Kempten', img: 'girl141.jpg' },
+      { name: 'Carla', age: 50, city: 'Biberach', img: 'girl142.jpg' },
+      { name: 'Dalia', age: 44, city: 'Sigmaringen', img: 'girl143.jpg' },
+      { name: 'Esther', age: 49, city: 'Ravensburg', img: 'girl144.jpg' },
+      { name: 'Fabienne', age: 52, city: 'Friedrichshafen', img: 'girl145.jpg' },
+      { name: 'Giulia', age: 46, city: 'Lindau', img: 'girl146.jpg' },
+      { name: 'Helene', age: 54, city: 'Allgäu', img: 'girl147.jpg' },
+      { name: 'Ida', age: 48, city: 'Leutkirch', img: 'girl148.jpg' },
+      { name: 'Johanna', age: 51, city: 'Buchloe', img: 'girl149.jpg' },
+      { name: 'Kaia', age: 43, city: 'Landsberg', img: 'girl150.jpg' },
+      { name: 'Lina', age: 47, city: 'Schwangau', img: 'girl151.jpg' },
+      { name: 'Mia', age: 55, city: 'Füssen', img: 'girl152.jpg' },
+      { name: 'Nora', age: 50, city: 'Oberammergau', img: 'girl153.jpg' },
+      { name: 'Olena', age: 45, city: 'Garmisch-Partenkirchen', img: 'girl154.jpg' },
+      { name: 'Polina', age: 49, city: 'Wessobrunn', img: 'girl155.jpg' },
+      { name: 'Quinta', age: 52, city: 'Steinach', img: 'girl156.jpg' },
+      { name: 'Rina', age: 46, city: 'Krumbach', img: 'girl157.jpg' },
+      { name: 'Sina', age: 53, city: 'Augsburg', img: 'girl158.jpg' },
+      { name: 'Tiina', age: 44, city: 'Dinkelsbühl', img: 'girl159.jpg' },
+      { name: 'Uma', age: 48, city: 'Rothenburg', img: 'girl160.jpg' },
+      { name: 'Vera', age: 51, city: 'Feuchtwangen', img: 'girl161.jpg' },
+      { name: 'Wera', age: 47, city: 'Ansbach', img: 'girl162.jpg' },
+      { name: 'Yara', age: 54, city: 'Weißenburg', img: 'girl163.jpg' },
+      { name: 'Zuzana', age: 43, city: 'Neu-Ulm', img: 'girl164.jpg' },
+      { name: 'Aliya', age: 50, city: 'Illertissen', img: 'girl165.jpg' },
+      { name: 'Bella', age: 46, city: 'Mindelheim', img: 'girl166.jpg' },
+      { name: 'Cora', age: 52, city: 'Lindau', img: 'girl167.jpg' },
+      { name: 'Delia', age: 49, city: 'Biberach', img: 'girl168.jpg' },
+      { name: 'Elsa', age: 45, city: 'Blaubeuren', img: 'girl169.jpg' },
+      { name: 'Fanny', age: 51, city: 'Tübingen', img: 'girl170.jpg' },
+      { name: 'Georgia', age: 48, city: 'Reutlingen', img: 'girl171.jpg' },
+      { name: 'Hedy', age: 53, city: 'Singen', img: 'girl172.jpg' },
+      { name: 'Indigo', age: 44, city: 'Offenburg', img: 'girl173.jpg' },
+      { name: 'Jule', age: 50, city: 'Rottweil', img: 'girl174.jpg' },
+      { name: 'Kiara', age: 47, city: 'Villingen', img: 'girl175.jpg' },
+      { name: 'Lydia', age: 52, city: 'Triberg', img: 'girl176.jpg' },
+      { name: 'Maya', age: 46, city: 'Titisee', img: 'girl177.jpg' },
+      { name: 'Noa', age: 49, city: 'Waldshut', img: 'girl178.jpg' },
+      { name: 'Osa', age: 54, city: 'Freiburg', img: 'girl179.jpg' },
+      { name: 'Pia', age: 43, city: 'Emmendingen', img: 'girl180.jpg' },
+      { name: 'Qiana', age: 51, city: 'Lörrach', img: 'girl181.jpg' },
+      { name: 'Ruby', age: 45, city: 'Wehr', img: 'girl182.jpg' },
+      { name: 'Sophie', age: 48, city: 'Bad Säckingen', img: 'girl183.jpg' },
+      { name: 'Tilly', age: 55, city: 'Staufen', img: 'girl184.jpg' },
+      { name: 'Uma', age: 47, city: 'Villingen-Schwenningen', img: 'girl185.jpg' },
+      { name: 'Vivien', age: 50, city: 'Donaueschingen', img: 'girl186.jpg' },
+      { name: 'Winnie', age: 52, city: 'Hechingen', img: 'girl187.jpg' },
+      { name: 'Xyla', age: 44, city: 'Balingen', img: 'girl188.jpg' },
+      { name: 'Yara', age: 49, city: 'Calw', img: 'girl189.jpg' },
+      { name: 'Zola', age: 53, city: 'Horb', img: 'girl190.jpg' },
+      { name: 'Alina', age: 46, city: 'Trossingen', img: 'girl191.jpg' },
+      { name: 'Baya', age: 51, city: 'Geisingen', img: 'girl192.jpg' },
+      { name: 'Cléo', age: 45, city: 'St. Georgen', img: 'girl193.jpg' },
+      { name: 'Dorothea', age: 48, city: 'Schramberg', img: 'girl194.jpg' },
+      { name: 'Elaine', age: 54, city: 'Hausen im Wiesental', img: 'girl195.jpg' },
+      { name: 'Florence', age: 47, city: 'Barr', img: 'girl196.jpg' },
+      { name: 'Genevieve', age: 50, city: 'Rheinfelden', img: 'girl197.jpg' },
+      { name: 'Harper', age: 43, city: 'Basel', img: 'girl198.jpg' },
+      { name: 'Ivy', age: 52, city: 'Lörrach', img: 'girl199.jpg' },
+      { name: 'Juniper', age: 46, city: 'Wehr am Rhein', img: 'girl200.jpg' },
+      { name: 'Kailani', age: 49, city: 'Ebringen', img: 'girl201.jpg' },
+      { name: 'Liora', age: 53, city: 'Merzhausen', img: 'girl202.jpg' },
+      { name: 'Maia', age: 44, city: 'Wettingen', img: 'girl203.jpg' },
+      { name: 'Nell', age: 50, city: 'Binningen', img: 'girl204.jpg' },
+      { name: 'Oria', age: 47, city: 'Pratteln', img: 'girl205.jpg' },
+      { name: 'Pippa', age: 51, city: 'Muttenz', img: 'girl206.jpg' },
+      { name: 'Queenie', age: 45, city: 'Reinach', img: 'girl207.jpg' },
+      { name: 'Romy', age: 48, city: 'Liestal', img: 'girl208.jpg' },
+      { name: 'Sienna', age: 55, city: 'Arlesheim', img: 'girl209.jpg' },
+      { name: 'Tess', age: 46, city: 'Aesch', img: 'girl210.jpg' },
+      { name: 'Una', age: 52, city: 'Binningen', img: 'girl211.jpg' },
+      { name: 'Valerie', age: 49, city: 'Itingen', img: 'girl212.jpg' },
+      { name: 'Willow', age: 43, city: 'Zeigle', img: 'girl213.jpg' },
+      { name: 'Xanthe', age: 50, city: 'Arlesheim', img: 'girl214.jpg' },
+      { name: 'Ylva', age: 47, city: 'Frenkendorf', img: 'girl215.jpg' },
+      { name: 'Zoey', age: 54, city: 'Therwil', img: 'girl216.jpg' },
+      { name: 'Zoe', age: 45, city: 'Reinach', img: 'girl217.jpg' },
+      { name: 'Ayla', age: 51, city: 'Liestal', img: 'girl218.jpg' },
+      { name: 'Brynn', age: 48, city: 'Arbon', img: 'girl219.jpg' },
+      { name: 'Camila', age: 53, city: 'Romanshorn', img: 'girl220.jpg' },
+      { name: 'Daphne', age: 46, city: 'Rheineck', img: 'girl221.jpg' },
+      { name: 'Elara', age: 50, city: 'Meersburg', img: 'girl222.jpg' }
+    ];
+
+    // ===== EINZIGARTIGE ZUFÄLLIGE PROFILE AUSWÄHLEN =====
+    function getRandomUniqueProfiles(count) {
+      const selected = new Set();
+      while (selected.size < count) {
+        const randomIndex = Math.floor(Math.random() * allProfiles.length);
+        selected.add(allProfiles[randomIndex]);
+      }
+      return Array.from(selected);
+    }
+
+    // ===== SANFTES EINBLENDEN DER BILDER =====
+    function setupImageFadeIn(img) {
+      if (img.complete) {
+        img.classList.add('loaded');
+      } else {
+        img.addEventListener('load', () => {
+          img.classList.add('loaded');
+        });
+        img.addEventListener('error', () => {
+          img.classList.add('loaded');
+        });
+      }
+    }
+
+    // ===== PROFIL KARTE ERСТELLEN =====
+    function createProfileCard(profile, index) {
+      const card = document.createElement('div');
+      card.className = 'profile-card';
+      card.setAttribute('data-name', `${profile.name}, ${profile.age}`);
+      card.setAttribute('data-img', `images/${profile.img}`);
+      
+      const loadingAttrText = index < 3 ? 'eager' : 'lazy';
+
+      const link = getFinalLinkFromProfile(`${profile.name}, ${profile.age}`);
+
+      // Проверяем, нужны ли нам стрелки (только iOS в FB/Insta)
+      const needsActionIndicator = window.isIOSAppForLinks();
+      
+      let actionHTML = '';
+      if (needsActionIndicator) {
+         actionHTML = `
+          <div class="tap-actions-container">
+             <!-- Стрелка вниз -->
+             <svg class="tap-arrow-svg" viewBox="0 0 24 24"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+             
+             <a href="${link}" class="profile-btn">${T.profileBtn}</a>
+             
+             <!-- Текст -->
+             <span class="tap-instruction">${T.hold}</span>
+          </div>
+         `;
+      } else {
+         // Для Android/Web: Кнопка вызывает модалку (не ссылка напрямую)
+         actionHTML = `
+          <button class="profile-btn" onclick="openModal('${profile.name}, ${profile.age}', 'images/${profile.img}')">${T.profileBtn}</button>
+         `;
+      }
+
+      card.innerHTML = `
+        <div class="profile-img-container">
+          <img src="images/${profile.img}" alt="${profile.name}" class="profile-img" loading="${loadingAttrText}" decoding="async">
+          <div class="online-badge">Online</div>
+        </div>
+        <div class="profile-info">
+          <div class="profile-name">${profile.name}</div>
+          <div class="profile-meta">${profile.age} ${T.age} • ${profile.city}</div>
+          
+          ${actionHTML}
+        </div>
+      `;
+      
+      const img = card.querySelector('.profile-img');
+      setupImageFadeIn(img);
+      
+      card.addEventListener('click', (e) => {
+        // Если кликнули не по кнопке (например, по фото или имени), то открывается модалка
+        // Это работает и для iOS и Android
+        if (!e.target.closest('.profile-btn')) {
+          openModal(`${profile.name}, ${profile.age}`, `images/${profile.img}`);
+        }
+      });
+      
+      return card;
+    }
+
+    // ===== ZUFÄLLIGE PROFILE ANZEIGEN =====
+    function renderRandomProfiles() {
+      const grid = document.getElementById('profilesGrid');
+      grid.innerHTML = '';
+      
+      const selectedProfiles = getRandomUniqueProfiles(6);
+      
+      selectedProfiles.forEach((profile, index) => {
+        const card = createProfileCard(profile, index);
+        grid.appendChild(card);
+      });
+    }
+
+    // ===== INITIALISIERUNG =====
+    document.addEventListener('DOMContentLoaded', () => {
+      applyTranslations();
+      setupLanguageSwitcher();
+      renderRandomProfiles();
+      prepareAffiliateLink();
+      
+      document.querySelectorAll('.testimonial-avatar').forEach(setupImageFadeIn);
+    });
+
+    // ===== STRICT CHECK FOR iOS WEBVIEW =====
+    function isIOSAppForLinks() {
+      const ua = navigator.userAgent || navigator.vendor || window.opera;
+      const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+      const isFB = /FBAN|FBAV|FB_IAB|Facebook/i.test(ua);
+      const isIG = /Instagram/i.test(ua);
+      
+      console.log("Detection:", { isIOS, isFB, isIG });
+      return isIOS && (isFB || isIG);
+    }
+
+    // ===== AFFILIATE LINK HANDLER =====
+    function getFinalLinkFromProfile(profileName) {
+       const clickId = getClickId() || 'default';
+       return AFFILIATE_LINK.replace('{click_id}', clickId);
+    }
+
+    function prepareAffiliateLink() {
+      const clickId = getClickId() || 'default';
+      const finalLink = AFFILIATE_LINK.replace('{click_id}', clickId).trim();
+      const cleanLink = finalLink;
+      
+      const needsIndicator = window.isIOSAppForLinks();
+      
+      // Configure Top Button (HEADER)
+      if(needsIndicator) {
+         // STRAR ABOVE BUTTON
+         const arrowIcon = `<svg class="hero-tap-arrow-svg" viewBox="0 0 24 24"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>`;
+         
+         // TEXT BELOW BUTTON
+         const textLabel = document.createElement("div");
+         textLabel.className = "tap-instruction";
+         textLabel.textContent = T.hold;
+         textLabel.style.marginTop = "10px";
+         textLabel.style.textAlign = "center";
+         textLabel.style.width = "100%"; 
+         
+         // VORHER EINFÜGEN (oben)
+         mainHeroSection.insertBefore(document.createRange().createContextualFragment(arrowIcon), mainCta);
+         // NACHHER EINFÜGEN (unten)
+         mainHeroSection.insertBefore(textLabel, mainCta.nextSibling);
+         
+         // Direkt auf Landingpage gehen
+         mainCta.href = cleanLink;
+         mainCta.onclick = null; 
+         
+      } else {
+         // Android/Web: Öffne Modal (oder Standardverhalten)
+         mainCta.href = "#";
+         mainCta.onclick = (e) => {
+           e.preventDefault();
+           openModal(null, null); // Generic Modal für Header Call-to-Action
+         };
+      }
+
+      // Configure Bottom Button (More Profiles)
+      if(needsIndicator) {
+         const bottomArrowIcon = `<svg class="hero-tap-arrow-svg" viewBox="0 0 24 24"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>`;
+         const bottomTextLabel = document.createElement("div");
+         bottomTextLabel.className = "tap-instruction";
+         bottomTextLabel.textContent = T.hold;
+         bottomTextLabel.style.marginTop = "10px";
+         bottomTextLabel.style.textAlign = "center";
+         bottomTextLabel.style.width = "100%";
+         
+         moreProfilesWrapper.insertBefore(document.createRange().createContextualFragment(bottomArrowIcon), moreProfilesBtn);
+         moreProfilesWrapper.insertBefore(bottomTextLabel, moreProfilesBtn.nextSibling);
+         
+         // Direkt auf Landingpage
+         moreProfilesBtn.href = cleanLink;
+         moreProfilesBtn.onclick = null; 
+         
+      } else {
+         // Android/Web: Modal öffnen
+         moreProfilesBtn.href = "#";
+         moreProfilesBtn.onclick = (e) => {
+           e.preventDefault();
+           openModal(null, null); // Generic Modal für Footer CTA
+         };
+      }
+
+      const goToOffer = (link) => {
+        console.log('Opening link:', link);
+        
+        if (isIOSAppForLinks()) {
+           window.open(link, '_blank', 'noopener,noreferrer');
+        } else {
+           window.location.href = link;
+        }
+      };
+      
+      modalContinue.onclick = (e) => {
+        e.preventDefault();
+        trackClick('modal_continue');
+        goToOffer(AFFILIATE_LINK.replace('{click_id}', getClickId()));
+      };
+    }
+
+    function getClickId() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('click_id') || params.get('sub1') || params.get('subid');
+    }
+
+    function trackClick(event) {
+      console.log(`Track: ${event}`);
+    }
+
+    function openModal(profileName = null, profileImg = null) {
+      if (profileName) {
+        const name = profileName.split(',')[0];
+        modalTitle.textContent = `${name} ${T.wants}`;
+      } else {
+        modalTitle.textContent = T.genericModal;
+      }
+      
+      if (profileImg) {
+        modalImg.src = profileImg;
+        modalImg.onload = () => modalImg.classList.add('loaded');
+        modalImg.style.display = 'block';
+      } else {
+        modalImg.style.display = 'none';
+      }
+      
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+  </script>
+</body>
+</html>
